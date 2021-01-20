@@ -1,5 +1,4 @@
 <p align="center"><img src="https://jamesiv.es/images/logo.png"></p>
-<p align="center">커피는 나의 원동력 :coffee:</p>
 <p align="center"><a href="https://jamesiv.es">Website</a> | <a href="https://www.linkedin.com/in/ivesjames/">LinkedIn</a> | <a href="https://twitter.com/_JamesIves">Twitter</a></p>
 
 
