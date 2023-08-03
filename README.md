@@ -1,4 +1,4 @@
-<p align="center"><img src="https://jamesiv.es/documents/logo.png" width="350"></p>
+<p align="center"><img src="https://jamesiv.es/documents/logo.png" width="400"></p>
 <p align="center"><samp align="center">
   <a href="https://jamesiv.es">Website</a> .
   <a href="https://www.linkedin.com/in/ivesjames/">LinkedIn</a>
