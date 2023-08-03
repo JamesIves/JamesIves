@@ -1,11 +1,8 @@
-<p ><img src="https://jamesiv.es/documents/logo.png" width="300"></p>
-<samp align="center">
+<p align="center"><img src="https://jamesiv.es/documents/logo.png" width="300"></p>
+<p align="center"><samp align="center">
   <a href="https://jamesiv.es">Website</a> .
   <a href="https://www.linkedin.com/in/ivesjames/">LinkedIn</a>
 </samp>
-
-<p>
-  
 </p>
 
 <!--
