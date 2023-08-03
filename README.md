@@ -1,6 +1,8 @@
-<p align="center"><img src="https://jamesiv.es/documents/logo.png" width="400"></p>
-<p align="center"><a href="https://jamesiv.es">Website</a> | <a href="https://www.linkedin.com/in/ivesjames/">LinkedIn</a>
-
+<p ><img src="https://jamesiv.es/documents/logo.png" width="400"></p>
+<samp align="center">
+  <a href="https://jamesiv.es">Website</a> .
+  <a href="https://www.linkedin.com/in/ivesjames/">LinkedIn</a>
+</samp>
 
 <!--
 **JamesIves/JamesIves** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
