@@ -1,7 +1,12 @@
 <p align="center"><img src="https://jamesiv.es/documents/logo.png" width="400"></p>
 
 <p align="center"><samp align="center">
-  📄 Recent Articles 
+  Recent Articles 
+</samp>
+</p>
+
+<p align="center"><samp align="center">
+ --- 
 </samp>
 </p>
 
