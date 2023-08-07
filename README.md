@@ -2,7 +2,7 @@
 
 </p>
 
-<samp>Software Engineer from London that loves all things front-end, design, and automation. Currently an Engineering Lead @ Blizzard Entertainment.</samp>
+<samp>Software Engineer from London that loves all things front-end, design, and automation.</samp>
 
 ## 👋 Recent 
 
