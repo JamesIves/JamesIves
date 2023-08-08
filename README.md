@@ -1,4 +1,4 @@
-<p><img src="https://jamesiv.es/documents/logo.png" width="200"></p>
+<p><img src="https://jamesiv.es/documents/logo.png" width="250"></p>
 
 </p>
 
