@@ -1,10 +1,10 @@
-<p><img src="https://jamesiv.es/documents/logo.png" width="250"></p>
+<p><img src="https://jamesiv.es/documents/logo.png" width="275"></p>
 
 </p>
 
 <samp>Software Engineer from London that loves all things front-end, design, and automation.</samp>
 
-## 👋 Recent Articles
+## 👋 <samp>Recent Articles</samp>
 
 * [Syncing Figma Variables and StyleDictionary with GitHub Actions](https://jamesiv.es/blog/frontend/design/2023/08/01/syncing-figma-variables-with-github-actions-and-styledictionary)
 * [Fostering Positive Change with Innovation Week](https://jamesiv.es/blog/leadership/2023/07/21/fostering-positive-change-with-innovation-week)
