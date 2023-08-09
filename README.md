@@ -5,7 +5,6 @@
 
 <samp>Software Engineer from London that loves all things front-end, design, and automation.</samp>
 
-<br />
 
 ### <samp>Recent Articles</samp>
 
