@@ -49,7 +49,7 @@ jobs:
               link = item.find('link').text
               pub_date = item.find('pubDate').text
               formatted_date = datetime.strptime(pub_date, '%a, %d %b %Y %H:%M:%S %Z').strftime('%B %d, %Y')
-              feed_content += f'[{title}]({link})\n\n<sup>{formatted_date}</sup>\n\n'
+              feed_content += f'[{title}]({link})\n> <sup>{formatted_date}</sup>\n\n'
 
           # Read the README file
           with open('README.md', 'r') as file:
