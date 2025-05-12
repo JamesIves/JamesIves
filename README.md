@@ -3,8 +3,6 @@
  <img src="./logo.gif" alt="Jives" width="350" />
 </a>
 
-## Blog
-
 <!--feed-->
 [F45 Broke Their Strava Integration So I Wrote My Own](https://jamesiv.es/blog/experiment/javascript/2025/03/14/f45-broke-my-beloved-strava-integration)
 
