@@ -63,14 +63,15 @@ jobs:
         run: |
           rm rss.xml
 
-      - name: Exit If No Changes to Commit 🚪
+      - name: Exit Gracefully If No Changes 🚪
         run: |
           if git diff --quiet; then
-            echo "No changes to commit. Exiting."
+            echo "No changes to commit. Exiting gracefully."
             exit 0
           fi
 
       - name: Commit and Push Changes 📣
+        continue-on-error: true
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
