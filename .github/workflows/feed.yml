@@ -27,33 +27,33 @@ jobs:
         id: update-readme
         run: |
           python3 -c """
-            import xml.etree.ElementTree as ET
+          import xml.etree.ElementTree as ET
 
-            # Parse the RSS feed
-            rss_tree = ET.parse('rss.xml')
-            root = rss_tree.getroot()
+          # Parse the RSS feed
+          rss_tree = ET.parse('rss.xml')
+          root = rss_tree.getroot()
 
-            # Extract the last 4 items
-            items = root.findall('.//item')[:4]
+          # Extract the last 4 items
+          items = root.findall('.//item')[:4]
 
-            # Format the items
-            feed_content = ''
-            for item in items:
-                title = item.find('title').text
-                link = item.find('link').text
-                feed_content += f'- [{title}]({link})\n'
+          # Format the items
+          feed_content = ''
+          for item in items:
+              title = item.find('title').text
+              link = item.find('link').text
+              feed_content += f'- [{title}]({link})\n'
 
-            # Read the README file
-            with open('README.md', 'r') as file:
-                readme_content = file.read()
+          # Read the README file
+          with open('README.md', 'r') as file:
+              readme_content = file.read()
 
-            # Replace the placeholder with the feed content
-            updated_content = readme_content.replace('<!--feed--><!--feed-->', f'<!--feed-->{feed_content}<!--feed-->')
+          # Replace the placeholder with the feed content
+          updated_content = readme_content.replace('<!--feed--><!--feed-->', f'<!--feed-->{feed_content}<!--feed-->')
 
-            # Write the updated content back to the README file
-            with open('README.md', 'w') as file:
-                file.write(updated_content)
-            """
+          # Write the updated content back to the README file
+          with open('README.md', 'w') as file:
+              file.write(updated_content)
+          """
 
       - name: Commit and Push Changes 📣
         run: |
