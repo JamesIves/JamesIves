@@ -1,5 +1,5 @@
 
-<a href="https://jives.dev">
+<a href="https://jamesiv.es" target="_blank">
  <img src="./logo.gif" alt="Jives" width="350" />
 </a>
 
