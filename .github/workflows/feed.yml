@@ -51,7 +51,8 @@ jobs:
               readme_content = file.read()
 
           # Replace the placeholder with the feed content
-          updated_content = readme_content.replace('<!--feed--><!--feed-->', f'<!--feed-->{feed_content}<!--feed-->')
+          # Ensure the appended items are on a new line
+          updated_content = readme_content.replace('<!--feed--><!--feed-->', f'<!--feed-->\n{feed_content}<!--feed-->')
 
           # Write the updated content back to the README file
           with open('README.md', 'w') as file:
