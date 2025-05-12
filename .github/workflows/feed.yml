@@ -58,6 +58,13 @@ jobs:
               file.write(updated_content)
           """
 
+      - name: Exit If No Changes to Commit 🚪
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit. Exiting."
+            exit 0
+          fi
+
       - name: Commit and Push Changes 📣
         run: |
           git config --global user.name "github-actions[bot]"
