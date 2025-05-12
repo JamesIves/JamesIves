@@ -31,6 +31,7 @@ jobs:
         run: |
           python3 -c """
           import xml.etree.ElementTree as ET
+          import re
 
           # Parse the RSS feed
           rss_tree = ET.parse('rss.xml')
@@ -51,7 +52,7 @@ jobs:
               readme_content = file.read()
 
           # Replace the placeholder with the feed content, ensuring it refreshes every time
-          updated_content = readme_content.replace(/<!--feed-->[\s\S]*?<!--feed-->/, f'<!--feed-->\n{feed_content}<!--feed-->')
+          updated_content = re.sub(r'<!--feed-->[\s\S]*?<!--feed-->', f'<!--feed-->\n{feed_content}<!--feed-->', readme_content)
 
           # Write the updated content back to the README file
           with open('README.md', 'w') as file:
