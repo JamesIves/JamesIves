@@ -50,14 +50,17 @@ jobs:
           with open('README.md', 'r') as file:
               readme_content = file.read()
 
-          # Replace the placeholder with the feed content
-          # Ensure the appended items are on a new line
-          updated_content = readme_content.replace('<!--feed--><!--feed-->', f'<!--feed-->\n{feed_content}<!--feed-->')
+          # Replace the placeholder with the feed content, ensuring it refreshes every time
+          updated_content = readme_content.replace(/<!--feed-->[\s\S]*?<!--feed-->/, f'<!--feed-->\n{feed_content}<!--feed-->')
 
           # Write the updated content back to the README file
           with open('README.md', 'w') as file:
               file.write(updated_content)
           """
+
+      - name: Clean up RSS file 🧹
+        run: |
+          rm rss.xml
 
       - name: Exit If No Changes to Commit 🚪
         run: |
