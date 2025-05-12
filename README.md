@@ -1,4 +1,4 @@
-<p><a href="https://jives.dev"><img src="https://jamesiv.es/documents/logo_jives.png" width="200"></a></p>
+<p><a href="https://jives.dev"><img src="./jives.gif" width="400"></a></p>
 
 </p>
 
