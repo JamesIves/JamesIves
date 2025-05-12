@@ -1,0 +1,64 @@
+name: Update RSS Feed 📖
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  update-feed:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛒
+        uses: actions/checkout@v3
+
+      - name: Set up Python 🐍
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Fetch RSS Feed 🐍
+        id: fetch-rss
+        run: |
+          curl -s https://jamesiv.es/feeds/rss.xml -o rss.xml
+
+      - name: Parse RSS Feed and Update README 📖
+        id: update-readme
+        run: |
+          python3 -c """
+            import xml.etree.ElementTree as ET
+
+            # Parse the RSS feed
+            rss_tree = ET.parse('rss.xml')
+            root = rss_tree.getroot()
+
+            # Extract the last 4 items
+            items = root.findall('.//item')[:4]
+
+            # Format the items
+            feed_content = ''
+            for item in items:
+                title = item.find('title').text
+                link = item.find('link').text
+                feed_content += f'- [{title}]({link})\n'
+
+            # Read the README file
+            with open('README.md', 'r') as file:
+                readme_content = file.read()
+
+            # Replace the placeholder with the feed content
+            updated_content = readme_content.replace('<!--feed--><!--feed-->', f'<!--feed-->{feed_content}<!--feed-->')
+
+            # Write the updated content back to the README file
+            with open('README.md', 'w') as file:
+                file.write(updated_content)
+            """
+
+      - name: Commit and Push Changes 📣
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "chore(rss): update RSS feed in README"
+          git push origin main
