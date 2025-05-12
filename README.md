@@ -1,9 +1,3 @@
-<p><a href="https://jives.dev"><img src="./jives.gif" width="400"></a></p>
-
-</p>
-
-
-**Software Engineer from London that loves all things front-end, design, and automation**.
 
 > [!NOTE]
 > ### Recent Thoughts 💭
