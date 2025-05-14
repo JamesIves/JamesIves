@@ -2,6 +2,10 @@ name: Guestbook 📖
 on:
   issue_comment:
     types: [created, edited, deleted]
+
+permissions:
+  contents: write
+
 jobs:
   update_guestbook:
     name: Update Guestbook 📖
