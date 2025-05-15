@@ -52,12 +52,14 @@ function sanitizeGuestbookEntry(comment: Comment, filter: Filter): string {
   });
 
   /**
+   * Remove URLs completely (no placeholder)
+   */
+  processedText = processedText.replace(/(https?:\/\/|www\.)[^\s]+/gi, "");
+
+  /**
    * Replace code blocks (triple backticks)
    */
-  processedText = processedText.replace(
-    /```[\s\S]*?```/g,
-    "[code block removed]"
-  );
+  processedText = processedText.replace(/```[\s\S]*?```/g, "");
 
   /**
    * Make single line by replacing all newlines with spaces
