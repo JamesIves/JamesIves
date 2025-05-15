@@ -83,7 +83,7 @@ function sanitizeGuestbookEntry(comment: Comment, filter: Filter): string {
     }
   );
 
-  return `<img width="24" height="24" align="center" src="${roundedAvatarUrl}" alt="${comment.author.login}"> ${processedText} - ${authorLink}\n> <sup>${formattedDate}</sup>\n`;
+  return `<a href="${comment.author.url}"><img width="24" height="24" align="center" src="${roundedAvatarUrl}" alt="${comment.author.login}"> ${processedText} - ${authorLink}\n></a> <sup>${formattedDate}</sup>\n`;
 }
 
 /**
