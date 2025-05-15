@@ -1,13 +1,12 @@
 {
   "name": "@JamesIves/JamesIves",
   "version": "1.0.0",
-  "description": "<a href=\"https://jamesiv.es\" target=\"_blank\" rel=\"noopener noreferrer\">  <img src=\"./logo.gif\" alt=\"Jives\" width=\"350px\" height=\"224px\" /> </a>",
-  "main": "sanitize.js",
+  "description": "GitHub profile README powered by GitHub Actions.",
   "scripts": {
     "sign": "node --experimental-strip-types guestbook.ts"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "James Ives <iam@jamesiv.es> (https://jamesiv.es)",
+  "license": "MIT",
   "devDependencies": {
     "@octokit/graphql": "^8.2.2",
     "@types/node": "^22.15.18",
