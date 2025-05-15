@@ -143,7 +143,9 @@ async function updateGuestbook(): Promise<void> {
   let cleanComments: Comment[] = [];
 
   for (const comment of result.repository.issue.comments.nodes) {
-    // Check for profanity
+    /**
+     * Check for profanity
+     */
     if (filter.isProfane(comment.bodyText)) {
       /**
        * Try to delete profane comments but continue if it fails
@@ -153,22 +155,22 @@ async function updateGuestbook(): Promise<void> {
       } catch (error) {
         console.error(`Failed to delete comment ${comment.id}: ${error}`);
       }
-      // Don't add profane comments to clean comments list
-      // They won't show in the guestbook
     } else {
-      // Only add non-profane comments
+      /**
+       * Only add non-profane comments
+       */
       cleanComments.push(comment);
     }
   }
 
-  // Try to process all deletion requests
+  /**
+   * Process all deletion requests
+   */
   if (deletePromises.length > 0) {
     try {
       await Promise.all(deletePromises);
     } catch (error) {
       console.error("Error deleting comments:", error);
-      // If deletion fails, we still don't include profane comments
-      // since we didn't add them to cleanComments above
     }
   }
 
@@ -179,7 +181,10 @@ async function updateGuestbook(): Promise<void> {
 
   const guestbookEntries = cleanComments
     .map((comment: Comment) => {
-      // Still filter comments during display as an extra precaution
+      /**
+       * Still filter comments during display as an extra precaution. This will mean that if a profane comment
+       * appears it will be correctly censored.
+       */
       return sanitizeGuestbookEntry(comment, filter);
     })
     .join("\n");
