@@ -28,6 +28,7 @@ jobs:
         run: npm run sign
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ADDITIONAL_BANNED_WORDS: ${{ secrets.ADDITIONAL_BANNED_WORDS }}
 
       - name: Commit and Push Changes 📣
         continue-on-error: true
