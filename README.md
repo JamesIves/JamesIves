@@ -18,9 +18,14 @@
 
 <!--feed-->
 
-### Guestbook
+### Guestbook 📖
 
 Thanks for dropping in! [Sign the guestbook here](https://github.com/JamesIves/JamesIves/issues/1).
 
 <!--guestbook-->
+
+<img width="24" height="24" align="center" src="https://images.weserv.nl/?url=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F28164458%3Fs%3D24%26u%3Dae2c7ab5fc3ca2852aafe376a1e0c8b735451a40%26v%3D4&h=24&w=24&fit=cover&mask=circle&maxage=7d" alt="Allysony"> Hi! - [@Allysony](https://github.com/Allysony)
+> <sup>May 14, 2025</sup>
+
+
 <!--guestbook-->
