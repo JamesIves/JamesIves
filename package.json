@@ -4,7 +4,7 @@
   "description": "<a href=\"https://jamesiv.es\" target=\"_blank\" rel=\"noopener noreferrer\">  <img src=\"./logo.gif\" alt=\"Jives\" width=\"350px\" height=\"224px\" /> </a>",
   "main": "sanitize.js",
   "scripts": {
-    "sign": "node --experimental-strip-types guestbook.js"
+    "sign": "node --experimental-strip-types guestbook.ts"
   },
   "author": "",
   "license": "ISC",
