@@ -2,6 +2,7 @@
   "name": "@JamesIves/JamesIves",
   "version": "1.0.0",
   "description": "GitHub profile README powered by GitHub Actions.",
+  "type": "module",
   "scripts": {
     "sign": "node --experimental-strip-types guestbook.ts"
   },
