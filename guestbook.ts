@@ -1,6 +1,7 @@
 import fs from "fs";
 import sanitizeHtml from "sanitize-html";
 import { graphql } from "@octokit/graphql";
+import { Octokit } from "@octokit/rest";
 import { Filter } from "bad-words";
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
@@ -12,6 +13,7 @@ interface Author {
 }
 
 interface Comment {
+  id: number; // Added ID for deletion
   author: Author;
   bodyText: string;
   updatedAt: string;
@@ -49,16 +51,22 @@ function sanitizeGuestbookEntry(comment: Comment, filter: Filter): string {
     allowedAttributes: {},
   });
 
-  // Replace code blocks (triple backticks)
+  /**
+   * Replace code blocks (triple backticks)
+   */
   processedText = processedText.replace(
     /```[\s\S]*?```/g,
     "[code block removed]"
   );
 
-  // Make single line by replacing all newlines with spaces
+  /**
+   * Make single line by replacing all newlines with spaces
+   */
   processedText = processedText.replace(/(\r\n|\n|\r)/gm, " ");
 
-  // Trim and limit length if needed
+  /**
+   * Trim and limit length if needed
+   */
   processedText = processedText.trim();
   if (processedText.length > 200) {
     processedText = processedText.substring(0, 200) + "...";
@@ -77,6 +85,23 @@ function sanitizeGuestbookEntry(comment: Comment, filter: Filter): string {
 }
 
 /**
+ * Deletes a comment containing profanity
+ */
+async function deleteComment(commentId: number): Promise<void> {
+  const octokit = new Octokit({
+    auth: GITHUB_TOKEN,
+  });
+
+  console.log(`Deleting comment ${commentId} due to profanity`);
+
+  await octokit.issues.deleteComment({
+    owner: "JamesIves",
+    repo: "JamesIves",
+    comment_id: commentId,
+  });
+}
+
+/**
  * Updates the Guestbook
  */
 async function updateGuestbook(): Promise<void> {
@@ -87,6 +112,7 @@ async function updateGuestbook(): Promise<void> {
       issue(number:$issue_number) {
         comments(first:3, orderBy:{direction:DESC, field:UPDATED_AT}) {
           nodes {
+            id: databaseId
             author {
               avatarUrl(size: 24)
               login
@@ -113,8 +139,23 @@ async function updateGuestbook(): Promise<void> {
   });
 
   const result = await graphqlWithAuth<GraphQLResponse>(query, variables);
+  const deletePromises: Promise<void>[] = [];
+  const cleanComments: Comment[] = [];
 
-  const guestbookEntries = result.repository.issue.comments.nodes
+  for (const comment of result.repository.issue.comments.nodes) {
+    if (filter.isProfane(comment.bodyText)) {
+      deletePromises.push(deleteComment(comment.id));
+    } else {
+      cleanComments.push(comment);
+    }
+  }
+
+  // Wait for all deletions to complete
+  if (deletePromises.length > 0) {
+    await Promise.all(deletePromises);
+  }
+
+  const guestbookEntries = cleanComments
     .map((comment: Comment) => {
       return sanitizeGuestbookEntry(comment, filter);
     })
