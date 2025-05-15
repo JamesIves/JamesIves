@@ -70,6 +70,14 @@ function sanitizeGuestbookEntry(comment: Comment, filter: Filter): string {
    * Trim and limit length if needed
    */
   processedText = processedText.trim();
+
+  /**
+   * If message is empty after sanitization, display "!"
+   */
+  if (!processedText) {
+    processedText = "!";
+  }
+
   if (processedText.length > 200) {
     processedText = processedText.substring(0, 200) + "...";
   }
