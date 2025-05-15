@@ -1,25 +1,44 @@
-const fs = require("fs");
-const sanitizeHtml = require("sanitize-html");
-const Filter = require("bad-words");
-const { graphql } = require("@octokit/graphql");
+import fs from "fs";
+import sanitizeHtml from "sanitize-html";
+import { graphql } from "@octokit/graphql";
+import { Filter } from "bad-words";
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
-// Initialize the bad words filter
-const filter = new Filter();
+interface Author {
+  avatarUrl: string;
+  login: string;
+  url: string;
+}
 
-// Add custom bad words if necessary
-filter.addWords("exampleBadWord1", "exampleBadWord2");
+interface Comment {
+  author: Author;
+  bodyText: string;
+  updatedAt: string;
+}
+
+interface GraphQLResponse {
+  repository: {
+    issue: {
+      comments: {
+        nodes: Comment[];
+      };
+    };
+  };
+}
 
 /**
  * Sanitizes the Guestbook Entry
  */
-function sanitizeGuestbookEntry(comment) {
+function sanitizeGuestbookEntry(comment: Comment, filter: Filter): string {
   const roundedAvatarUrl = `https://images.weserv.nl/?url=${encodeURIComponent(
     comment.author.avatarUrl
   )}&h=24&w=24&fit=cover&mask=circle&maxage=7d`;
   const authorLink = `[@${comment.author.login}](${comment.author.url})`;
 
+  /**
+   * Strip HTML and bad words.
+   */
   const sanitizedBodyText = sanitizeHtml(filter.clean(comment.bodyText), {
     allowedTags: [],
     allowedAttributes: {},
@@ -34,13 +53,15 @@ function sanitizeGuestbookEntry(comment) {
     }
   );
 
-  return `<img width="24" height="24" align="center" src="${roundedAvatarUrl}" alt="${comment.author.login}"> ${sanitizedBodyText} - ${authorLink}\n> <sup>${formattedDate}</sup>\n`;
+  return `<img width="24" height="24" align="center" src="${roundedAvatarUrl}" alt="${comment.author.login}"> \`\`\`\n${sanitizedBodyText}\n\`\`\` - ${authorLink}\n> <sup>${formattedDate}</sup>\n`;
 }
 
 /**
  * Updates the Guestbook
  */
-async function updateGuestbook() {
+async function updateGuestbook(): Promise<void> {
+  const filter = new Filter();
+
   const query = `query($owner:String!, $name:String!, $issue_number:Int!) {
     repository(owner:$owner, name:$name){
       issue(number:$issue_number) {
@@ -71,11 +92,11 @@ async function updateGuestbook() {
     },
   });
 
-  const result = await graphqlWithAuth(query, variables);
+  const result = await graphqlWithAuth<GraphQLResponse>(query, variables);
 
   const guestbookEntries = result.repository.issue.comments.nodes
-    .map((comment) => {
-      return sanitizeGuestbookEntry(comment);
+    .map((comment: Comment) => {
+      return sanitizeGuestbookEntry(comment, filter);
     })
     .join("\n");
 
@@ -87,7 +108,7 @@ async function updateGuestbook() {
   fs.writeFileSync("README.md", updatedReadme, "utf8");
 }
 
-updateGuestbook().catch((error) => {
+updateGuestbook().catch((error: Error) => {
   console.error(error);
   process.exit(1);
 });

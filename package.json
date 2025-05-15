@@ -4,11 +4,13 @@
   "description": "<a href=\"https://jamesiv.es\" target=\"_blank\" rel=\"noopener noreferrer\">  <img src=\"./logo.gif\" alt=\"Jives\" width=\"350px\" height=\"224px\" /> </a>",
   "main": "sanitize.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "sign": "node --experimental-strip-types guestbook.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@octokit/graphql": "^8.2.2",
+    "@types/node": "^22.15.18",
     "bad-words": "^4.0.0",
     "sanitize-html": "^2.17.0"
   }

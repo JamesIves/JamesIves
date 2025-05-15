@@ -13,22 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.2.2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Configure Node
+        uses: actions/setup-node@v4.4.0
         with:
-          node-version: 18
+          node-version-file: ".node-version"
 
       - name: Install Dependencies
         run: npm install
 
-      - name: Update Guestbook
-        run: node guestbook.js
+      - name: Update Guestbook 📖
+        run: npm run sign
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Commit and Push Changes
+      - name: Commit and Push Changes 📣
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
