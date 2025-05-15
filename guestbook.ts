@@ -36,13 +36,29 @@ function sanitizeGuestbookEntry(comment: Comment, filter: Filter): string {
   )}&h=24&w=24&fit=cover&mask=circle&maxage=7d`;
   const authorLink = `[@${comment.author.login}](${comment.author.url})`;
 
-  /**
-   * Strip HTML and bad words.
-   */
-  const sanitizedBodyText = sanitizeHtml(filter.clean(comment.bodyText), {
+  // Clean, sanitize and prepare comment text
+  let processedText = filter.clean(comment.bodyText);
+
+  // Strip HTML
+  processedText = sanitizeHtml(processedText, {
     allowedTags: [],
     allowedAttributes: {},
   });
+
+  // Replace code blocks (triple backticks)
+  processedText = processedText.replace(
+    /```[\s\S]*?```/g,
+    "[code block removed]"
+  );
+
+  // Make single line by replacing all newlines with spaces
+  processedText = processedText.replace(/(\r\n|\n|\r)/gm, " ");
+
+  // Trim and limit length if needed
+  processedText = processedText.trim();
+  if (processedText.length > 200) {
+    processedText = processedText.substring(0, 200) + "...";
+  }
 
   const formattedDate = new Date(comment.updatedAt).toLocaleDateString(
     "en-US",
@@ -53,7 +69,7 @@ function sanitizeGuestbookEntry(comment: Comment, filter: Filter): string {
     }
   );
 
-  return `<img width="24" height="24" align="center" src="${roundedAvatarUrl}" alt="${comment.author.login}"> \`\`\`\n${sanitizedBodyText}\n\`\`\` - ${authorLink}\n> <sup>${formattedDate}</sup>\n`;
+  return `<img width="24" height="24" align="center" src="${roundedAvatarUrl}" alt="${comment.author.login}"> ${processedText} - ${authorLink}\n> <sup>${formattedDate}</sup>\n`;
 }
 
 /**
