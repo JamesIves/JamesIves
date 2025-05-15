@@ -117,6 +117,19 @@ async function deleteComment(commentId: number): Promise<void> {
 async function updateGuestbook(): Promise<void> {
   const filter = new Filter();
 
+  const additionalBannedWords = process.env.ADDITIONAL_BANNED_WORDS;
+  if (additionalBannedWords) {
+    try {
+      const customWords = additionalBannedWords
+        .split(",")
+        .map((word) => word.trim());
+
+      filter.addWords(...customWords);
+    } catch (error) {
+      console.error("Failed to parse additional banned words");
+    }
+  }
+
   const query = `query($owner:String!, $name:String!, $issue_number:Int!) {
     repository(owner:$owner, name:$name){
       issue(number:$issue_number) {
