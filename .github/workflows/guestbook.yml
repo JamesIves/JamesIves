@@ -15,52 +15,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Update Guestbook
-        uses: actions/github-script@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          script: |
-            const query = `query($owner:String!, $name:String!, $issue_number:Int!) {
-              repository(owner:$owner, name:$name){
-                issue(number:$issue_number) {
-                  comments(first:3, orderBy:{direction:DESC, field:UPDATED_AT}) {
-                    nodes {
-                      author {
-                        avatarUrl(size: 24)
-                        login
-                        url
-                      }
-                      bodyText
-                      updatedAt
-                    }
-                  }
-                }
-              }
-            }`;
-            const variables = {
-              owner: context.repo.owner,
-              name: context.repo.repo,
-              issue_number: context.issue.number
-            };
-            const result = await github.graphql(query, variables);
+          node-version: 18
 
-            const guestbookEntries = result.repository.issue.comments.nodes.map(comment => {
-              const roundedAvatarUrl = `https://images.weserv.nl/?url=${encodeURIComponent(comment.author.avatarUrl)}&h=24&w=24&fit=cover&mask=circle&maxage=7d`;
-              const authorLink = `[@${comment.author.login}](${comment.author.url})`;
-              const formattedDate = new Date(comment.updatedAt).toLocaleDateString('en-US', {
-                year: 'numeric', month: 'long', day: 'numeric'
-              });
-              return `<img width="24" height="24" align="center" src="${roundedAvatarUrl}" alt="${comment.author.login}"> ${comment.bodyText} - ${authorLink}\n> <sup>${formattedDate}</sup>\n`;
-            }).join('\n');
+      - name: Install Dependencies
+        run: npm install
 
-            const fs = require('fs');
-            const readme = fs.readFileSync('README.md', 'utf8');
-            const updatedReadme = readme.replace(
-              /(?<=<!--guestbook-->)[\s\S]*?(?=<!--guestbook-->)/,
-              `\n\n${guestbookEntries}\n\n`
-            );
-            fs.writeFileSync('README.md', updatedReadme, 'utf8');
+      - name: Update Guestbook
+        run: node guestbook.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Add guestbook update
+      - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"

@@ -1,0 +1,15 @@
+{
+  "name": "@JamesIves/JamesIves",
+  "version": "1.0.0",
+  "description": "<a href=\"https://jamesiv.es\" target=\"_blank\" rel=\"noopener noreferrer\">  <img src=\"./logo.gif\" alt=\"Jives\" width=\"350px\" height=\"224px\" /> </a>",
+  "main": "sanitize.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "bad-words": "^4.0.0",
+    "sanitize-html": "^2.17.0"
+  }
+}
