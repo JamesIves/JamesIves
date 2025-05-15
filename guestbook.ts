@@ -110,7 +110,7 @@ async function updateGuestbook(): Promise<void> {
   const query = `query($owner:String!, $name:String!, $issue_number:Int!) {
     repository(owner:$owner, name:$name){
       issue(number:$issue_number) {
-        comments(first:3, orderBy:{direction:DESC, field:UPDATED_AT}) {
+        comments(first:20, orderBy:{direction:DESC, field:UPDATED_AT}) {
           nodes {
             id: databaseId
             author {
@@ -140,23 +140,46 @@ async function updateGuestbook(): Promise<void> {
 
   const result = await graphqlWithAuth<GraphQLResponse>(query, variables);
   const deletePromises: Promise<void>[] = [];
-  const cleanComments: Comment[] = [];
+  let cleanComments: Comment[] = [];
 
   for (const comment of result.repository.issue.comments.nodes) {
+    // Check for profanity
     if (filter.isProfane(comment.bodyText)) {
-      deletePromises.push(deleteComment(comment.id));
+      /**
+       * Try to delete profane comments but continue if it fails
+       */
+      try {
+        deletePromises.push(deleteComment(comment.id));
+      } catch (error) {
+        console.error(`Failed to delete comment ${comment.id}: ${error}`);
+      }
+      // Don't add profane comments to clean comments list
+      // They won't show in the guestbook
     } else {
+      // Only add non-profane comments
       cleanComments.push(comment);
     }
   }
 
-  // Wait for all deletions to complete
+  // Try to process all deletion requests
   if (deletePromises.length > 0) {
-    await Promise.all(deletePromises);
+    try {
+      await Promise.all(deletePromises);
+    } catch (error) {
+      console.error("Error deleting comments:", error);
+      // If deletion fails, we still don't include profane comments
+      // since we didn't add them to cleanComments above
+    }
   }
+
+  /**
+   * Take only the first 3 clean comments
+   */
+  cleanComments = cleanComments.slice(0, 3);
 
   const guestbookEntries = cleanComments
     .map((comment: Comment) => {
+      // Still filter comments during display as an extra precaution
       return sanitizeGuestbookEntry(comment, filter);
     })
     .join("\n");
