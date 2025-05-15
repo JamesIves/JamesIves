@@ -30,13 +30,6 @@ interface GraphQLResponse {
 }
 
 /**
- * Normalize text to remove special characters and numbers
- */
-function normalizeText(text: string): string {
-  return text.replace(/[^a-zA-Z]/g, '').toLowerCase();
-}
-
-/**
  * Sanitizes the Guestbook Entry
  */
 function sanitizeGuestbookEntry(comment: Comment, filter: Filter): string {
@@ -48,9 +41,7 @@ function sanitizeGuestbookEntry(comment: Comment, filter: Filter): string {
   /**
    * Clean, sanitize and prepare comment text
    */
-  let processedText = normalizeText(comment.bodyText);
-
-  processedText = filter.clean(processedText);
+  let processedText = filter.clean(comment.bodyText);
 
   /**
    * Strip HTML
@@ -100,7 +91,7 @@ function sanitizeGuestbookEntry(comment: Comment, filter: Filter): string {
     }
   );
 
-  return `<a href="${comment.author.url}"><img width="24" height="24" align="center" src="${roundedAvatarUrl}" alt="${comment.author.login}"></a> ${processedText} - ${authorLink}\n><sup>${formattedDate}</sup>`;
+  return `<a href="${comment.author.url}"><img width="24" height="24" align="center" src="${roundedAvatarUrl}" alt="${comment.author.login}"></a> ${processedText} - ${authorLink}\n></a> <sup>${formattedDate}</sup>\n`;
 }
 
 /**
@@ -132,6 +123,7 @@ async function updateGuestbook(): Promise<void> {
       const customWords = additionalBannedWords
         .split(",")
         .map((word) => word.trim());
+
       filter.addWords(...customWords);
     } catch (error) {
       console.error("Failed to parse additional banned words");
@@ -175,20 +167,28 @@ async function updateGuestbook(): Promise<void> {
 
   for (const comment of result.repository.issue.comments.nodes) {
     /**
-     * Normalize text and check for profanity
+     * Check for profanity
      */
-    const normalizedText = normalizeText(comment.bodyText);
-    if (filter.isProfane(normalizedText)) {
+    if (filter.isProfane(comment.bodyText)) {
+      /**
+       * Try to delete profane comments but continue if it fails
+       */
       try {
         deletePromises.push(deleteComment(comment.id));
       } catch (error) {
         console.error(`Failed to delete comment ${comment.id}: ${error}`);
       }
     } else {
+      /**
+       * Only add non-profane comments
+       */
       cleanComments.push(comment);
     }
   }
 
+  /**
+   * Process all deletion requests
+   */
   if (deletePromises.length > 0) {
     try {
       await Promise.all(deletePromises);
@@ -197,10 +197,19 @@ async function updateGuestbook(): Promise<void> {
     }
   }
 
+  /**
+   * Take only the first 3 clean comments
+   */
   cleanComments = cleanComments.slice(0, 3);
 
   const guestbookEntries = cleanComments
-    .map((comment: Comment) => sanitizeGuestbookEntry(comment, filter))
+    .map((comment: Comment) => {
+      /**
+       * Still filter comments during display as an extra precaution. This will mean that if a profane comment
+       * appears it will be correctly censored.
+       */
+      return sanitizeGuestbookEntry(comment, filter);
+    })
     .join("\n");
 
   const readme = fs.readFileSync("README.md", "utf8");
