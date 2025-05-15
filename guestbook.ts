@@ -36,10 +36,14 @@ function sanitizeGuestbookEntry(comment: Comment, filter: Filter): string {
   )}&h=24&w=24&fit=cover&mask=circle&maxage=7d`;
   const authorLink = `[@${comment.author.login}](${comment.author.url})`;
 
-  // Clean, sanitize and prepare comment text
+  /**
+   * Clean, sanitize and prepare comment text
+   */
   let processedText = filter.clean(comment.bodyText);
 
-  // Strip HTML
+  /**
+   * Strip HTML
+   */
   processedText = sanitizeHtml(processedText, {
     allowedTags: [],
     allowedAttributes: {},
