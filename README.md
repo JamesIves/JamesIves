@@ -3,14 +3,14 @@
 </a>
 
 <!--feed-->
+[Headless Storybook with Lit](https://jamesiv.es/blog/frontend/javascript/2026/03/13/headless-storybook-with-lit)
+> <sup>March 13, 2026</sup>
+
 [Connecting the Custom Elements Manifest to Figma Code Connect](https://jamesiv.es/blog/frontend/javascript/2025/09/21/custom-elements-manifest-and-figma-code-connect)
 > <sup>September 21, 2025</sup>
 
 [F45 Broke Their Strava Integration So I Wrote My Own](https://jamesiv.es/blog/experiment/javascript/2025/03/14/f45-broke-my-beloved-strava-integration)
 > <sup>March 14, 2025</sup>
-
-[Documenting Web Components With Storybook](https://jamesiv.es/blog/frontend/javascript/2025/02/19/documenting-web-components-with-storybook)
-> <sup>February 19, 2025</sup>
 
 <!--feed-->
 
