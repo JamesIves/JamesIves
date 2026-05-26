@@ -3,14 +3,14 @@
 </a>
 
 <!--feed-->
+[Your Design System Needs An MCP Server](https://jamesiv.es/blog/frontend/design/2026/05/25/your-design-system-needs-an-mcp-server)
+> <sup>May 25, 2026</sup>
+
 [Gathering Hyrox Race Insights with Python](https://jamesiv.es/blog/python/2026/03/19/gathering-hyrox-race-insights-with-python)
 > <sup>March 19, 2026</sup>
 
 [Headless Storybook with Lit](https://jamesiv.es/blog/frontend/javascript/2026/03/13/headless-storybook-with-lit)
 > <sup>March 13, 2026</sup>
-
-[Connecting the Custom Elements Manifest to Figma Code Connect](https://jamesiv.es/blog/frontend/javascript/2025/09/21/custom-elements-manifest-and-figma-code-connect)
-> <sup>September 21, 2025</sup>
 
 <!--feed-->
 
