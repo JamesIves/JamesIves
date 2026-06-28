@@ -3,13 +3,13 @@
 </a>
 
 <!--feed-->
-[Welcome to Mars. Your LCP is 6 Seconds.](https://jamesiv.es/blog/frontend/performance/2026/06/19/welcome-to-mars-your-lcp-is-6-seconds)
+[Welcome to Mars. Your LCP is 6 Seconds.](https://jamesiv.es/blog/welcome-to-mars-your-lcp-is-6-seconds/)
 > <sup>June 19, 2026</sup>
 
-[Your Design System Needs An MCP Server](https://jamesiv.es/blog/frontend/design/2026/05/25/your-design-system-needs-an-mcp-server)
+[Your Design System Needs An MCP Server](https://jamesiv.es/blog/your-design-system-needs-an-mcp-server/)
 > <sup>May 25, 2026</sup>
 
-[Gathering Hyrox Race Insights with Python](https://jamesiv.es/blog/python/2026/03/19/gathering-hyrox-race-insights-with-python)
+[Gathering Hyrox Race Insights with Python](https://jamesiv.es/blog/gathering-hyrox-race-insights-with-python/)
 > <sup>March 19, 2026</sup>
 
 <!--feed-->
