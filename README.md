@@ -3,14 +3,14 @@
 </a>
 
 <!--feed-->
+[Figma Config 2026](https://jamesiv.es/blog/figma-config-2026/)
+> <sup>July 03, 2026</sup>
+
 [Welcome to Mars. Your LCP is 6 Seconds.](https://jamesiv.es/blog/welcome-to-mars-your-lcp-is-6-seconds/)
 > <sup>June 19, 2026</sup>
 
 [Your Design System Needs An MCP Server](https://jamesiv.es/blog/your-design-system-needs-an-mcp-server/)
 > <sup>May 25, 2026</sup>
-
-[Gathering Hyrox Race Insights with Python](https://jamesiv.es/blog/gathering-hyrox-race-insights-with-python/)
-> <sup>March 19, 2026</sup>
 
 <!--feed-->
 
